@@ -126,8 +126,8 @@ def dns_reply(packet):
 
     Hold on! Did you notice the sendp and send functions? Scapy's send() and sendp() functions are used for layer 2 and 3 (the network and transmission layers) of the OSI model respectively.
         - send() is used in ARP Spoofing since it involves the exploitation of the ARP protocol (a layer 2 protocol)
-        - sendp() is used in DNS Spoofing, since it's a UDP or layer 3 protocol.
-            - Although DNS itself would theoretically be at the application layer (number 7), scapy crafts everything needed, using the sendp() or send() functions to transmit data, used by layers 2 and 3.
+        - sendp() is used in DNS Spoofing, since it's a UDP or layer 3 protocol (relative to scapy, and would otherwise be number 4 on the OSI model).
+            - Although DNS itself would theoretically be at the application layer (OSI layer 7), scapy crafts everything needed, using the sendp() or send() functions to transmit data, used by layers 2 and 3.
     """
     spoofed_ip = dns_spoof.get(packet["DNS Question Record"].qname.decode())
     if (spoofed_ip or spoof_every_req) and packet["DNS Question Record"].qname.decode() not in dns_whitelist and ((IP in packet and packet[IP].src in targets) or not targeting):
